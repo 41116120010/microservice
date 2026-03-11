@@ -1,4 +1,4 @@
-package com.daffiqtrie.Produk.controller;
+package com.daffiqtrie.order.controller;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.daffiqtrie.Produk.model.Order;
-import com.daffiqtrie.Produk.service.OrderService;
+import com.daffiqtrie.order.model.Order;
+import com.daffiqtrie.order.service.OrderService;
 
 @RestController
 @RequestMapping("/api/order")

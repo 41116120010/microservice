@@ -1,4 +1,4 @@
-package com.daffiqtrie.Produk.model;
+package com.daffiqtrie.order.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

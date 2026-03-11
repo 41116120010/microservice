@@ -1,12 +1,12 @@
-package com.daffiqtrie.Produk.service;
+package com.daffiqtrie.pelanggan.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daffiqtrie.Produk.model.Pelanggan;
-import com.daffiqtrie.Produk.repository.PelangganRepository;
+import com.daffiqtrie.pelanggan.model.Pelanggan;
+import com.daffiqtrie.pelanggan.repository.PelangganRepository;
 
 @Service
 public class PelangganService {

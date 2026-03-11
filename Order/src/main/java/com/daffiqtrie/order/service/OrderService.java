@@ -1,12 +1,12 @@
-package com.daffiqtrie.Produk.service;
+package com.daffiqtrie.order.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daffiqtrie.Produk.model.Order;
-import com.daffiqtrie.Produk.repository.OrderRepository;
+import com.daffiqtrie.order.model.Order;
+import com.daffiqtrie.order.repository.OrderRepository;
 
 @Service
 public class OrderService {

@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.daffiqtrie</groupId>
-	<artifactId>Produk</artifactId>
+	<artifactId>pelanggan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Produk</name>
-	<description>Produk untuk Microservice</description>
+	<name>pelanggan</name>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>

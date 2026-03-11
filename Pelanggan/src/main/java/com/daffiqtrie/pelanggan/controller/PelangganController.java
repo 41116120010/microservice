@@ -1,4 +1,4 @@
-package com.daffiqtrie.Produk.controller;
+package com.daffiqtrie.pelanggan.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.daffiqtrie.Produk.model.Pelanggan;
-import com.daffiqtrie.Produk.service.PelangganService;
+import com.daffiqtrie.pelanggan.model.Pelanggan;
+import com.daffiqtrie.pelanggan.service.PelangganService;
 
 @RestController
 @RequestMapping("/api/pelanggan")
