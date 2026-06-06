@@ -1,6 +1,6 @@
 ATMA_Springboot/
 
-LAPORAN_KESELURUHAN.md
+*.md
 
 # Maven
 target/
