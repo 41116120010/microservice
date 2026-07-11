@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: local
+    system: microservice-learning
+
+scrape_configs:
+  - job_name: spring-services
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets:
+          - eureka:8761
+          - auth-service:9000
+          - gateway:9310
+          - produk:8081
+          - order:8082
+          - pelanggan:8083
+          - produser:8080
+          - konsumer:8084
+
+  - job_name: rabbitmq
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["rabbitmq:15692"]

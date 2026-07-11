@@ -1,0 +1,7 @@
+<configuration>
+    <springProperty scope="context" name="serviceName" source="spring.application.name" defaultValue="order"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender"><encoder><pattern>%d{ISO8601} %-5level [%thread] %logger{36} - %msg%n</pattern></encoder></appender>
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender"><destination>${LOGSTASH_HOST:-localhost}:${LOGSTASH_PORT:-5000}</destination><encoder class="net.logstash.logback.encoder.LogstashEncoder"><customFields>{"service":"${serviceName}"}</customFields></encoder></appender>
+    <appender name="ASYNC_LOGSTASH" class="ch.qos.logback.classic.AsyncAppender"><queueSize>512</queueSize><discardingThreshold>0</discardingThreshold><appender-ref ref="LOGSTASH"/></appender>
+    <root level="${LOG_LEVEL:-INFO}"><appender-ref ref="CONSOLE"/><appender-ref ref="ASYNC_LOGSTASH"/></root>
+</configuration>
