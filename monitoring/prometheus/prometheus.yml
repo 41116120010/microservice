@@ -11,13 +11,13 @@ scrape_configs:
     static_configs:
       - targets:
           - eureka:8761
-          - auth-service:9000
+          - auth-service:9300
           - gateway:9310
           - produk:8081
           - order:8082
           - pelanggan:8083
           - produser:8080
-          - konsumer:8084
+
 
   - job_name: rabbitmq
     metrics_path: /metrics
