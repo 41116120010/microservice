@@ -6,6 +6,7 @@ x-logging-environment: &logging-environment
 
 services:
   rabbitmq:
+    mem_limit: 160m
     image: rabbitmq:3.13-management
     ports:
       - "15672:15672"
@@ -18,6 +19,7 @@ services:
       retries: 10
 
   eureka:
+    mem_limit: 320m
     build:
       context: .
       args:
@@ -28,6 +30,7 @@ services:
       <<: *logging-environment
 
   auth-service:
+    mem_limit: 320m
     build:
       context: .
       args:
@@ -41,6 +44,7 @@ services:
       - eureka
 
   produk:
+    mem_limit: 288m
     build:
       context: .
       args:
@@ -55,6 +59,7 @@ services:
       - auth-service
 
   order:
+    mem_limit: 352m
     build:
       context: .
       args:
@@ -65,6 +70,9 @@ services:
       AUTH_JWK_SET_URI: http://auth-service:9300/.well-known/jwks.json
       AUTH_JWT_ISSUER: http://auth-service:9300
       RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -74,6 +82,7 @@ services:
         condition: service_started
 
   pelanggan:
+    mem_limit: 288m
     build:
       context: .
       args:
@@ -88,6 +97,7 @@ services:
       - auth-service
 
   produser:
+    mem_limit: 288m
     build:
       context: .
       args:
@@ -98,6 +108,9 @@ services:
       AUTH_JWK_SET_URI: http://auth-service:9300/.well-known/jwks.json
       AUTH_JWT_ISSUER: http://auth-service:9300
       RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -108,6 +121,7 @@ services:
 
   konsumer:
     profiles: ["notifications"]
+    mem_limit: 288m
     build:
       context: .
       args:
@@ -123,6 +137,7 @@ services:
         condition: service_healthy
 
   gateway:
+    mem_limit: 352m
     build:
       context: .
       args:
@@ -143,6 +158,7 @@ services:
       - produser
 
   prometheus:
+    mem_limit: 192m
     image: prom/prometheus:v2.54.1
     command:
       - --config.file=/etc/prometheus/prometheus.yml
@@ -154,6 +170,7 @@ services:
       - prometheus-data:/prometheus
 
   grafana:
+    mem_limit: 192m
     image: grafana/grafana:11.2.0
     ports:
       - "3000:3000"
@@ -169,28 +186,37 @@ services:
       - prometheus
 
   elasticsearch:
+    mem_limit: 768m
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
       xpack.security.transport.ssl.enabled: "false"
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      cluster.routing.allocation.disk.watermark.low: 90%
+      cluster.routing.allocation.disk.watermark.high: 95%
+      cluster.routing.allocation.disk.watermark.flood_stage: 97%
+      ES_JAVA_OPTS: -Xms320m -Xmx320m
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
 
   logstash:
+    mem_limit: 384m
     image: docker.elastic.co/logstash/logstash:8.15.0
+    environment:
+      LS_JAVA_OPTS: -Xms192m -Xmx192m
     volumes:
       - ./monitoring/logstash/pipeline:/usr/share/logstash/pipeline:ro
     depends_on:
       - elasticsearch
 
   kibana:
+    mem_limit: 640m
     image: docker.elastic.co/kibana/kibana:8.15.0
     ports:
       - "5601:5601"
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      NODE_OPTIONS: --max-old-space-size=384
     depends_on:
       - elasticsearch
 

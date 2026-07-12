@@ -14,7 +14,7 @@ import com.daffiqtrie.order.model.Order;
 import com.daffiqtrie.order.repository.OrderRepository;
 import com.daffiqtrie.order.vo.Produk;
 import com.daffiqtrie.order.vo.ResponseTemplate;
-import com.netflix.discovery.converters.Auto;
+
 
 @Service
 public class OrderService {
@@ -56,15 +56,17 @@ public class OrderService {
     }
 
     public Order updateOrder(Order order) {
-        sendMessage("Order updated: " + "ID: " + order.getId() + " ID Produk: " + order.getIdProduk() + " Jumlah: "
-                + order.getJumlah() + "Harga Satuan: " + order.getHarga() + " Total Harga: " + order.getTotal()
-                + " ID Pelanggan: " + order.getIdPelanggan());
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        sendMessage("Order updated: " + "ID: " + savedOrder.getId() + " ID Produk: " + savedOrder.getIdProduk() + " Jumlah: "
+                + savedOrder.getJumlah() + " Harga Satuan: " + savedOrder.getHarga() + " Total Harga: " + savedOrder.getTotal()
+                + " ID Pelanggan: " + savedOrder.getIdPelanggan());
+        return savedOrder;
     }
 
     public void deleteOrder(Integer id) {
+        Order order = getOrderById(id);
+        orderRepository.delete(order);
         sendMessage("Order deleted: " + id);
-        orderRepository.deleteById(id);
     }
 
     @org.springframework.transaction.annotation.Transactional
