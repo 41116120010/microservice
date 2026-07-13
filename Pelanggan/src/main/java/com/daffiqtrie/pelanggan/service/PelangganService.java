@@ -26,6 +26,16 @@ public class PelangganService {
         return pelangganRepository.save(pelanggan);
     }
 
+    public Pelanggan updatePelanggan(Integer id, Pelanggan pelanggan) {
+        return pelangganRepository.findById(id)
+                .map(existing -> {
+                    existing.setNama(pelanggan.getNama());
+                    existing.setAlamat(pelanggan.getAlamat());
+                    return pelangganRepository.save(existing);
+                })
+                .orElse(null);
+    }
+
     public void deletePelanggan(Integer id) {
         pelangganRepository.deleteById(id);
     }

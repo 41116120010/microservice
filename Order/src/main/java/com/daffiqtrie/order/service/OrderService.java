@@ -55,12 +55,21 @@ public class OrderService {
         return savedOrder;
     }
 
-    public Order updateOrder(Order order) {
-        Order savedOrder = orderRepository.save(order);
-        sendMessage("Order updated: " + "ID: " + savedOrder.getId() + " ID Produk: " + savedOrder.getIdProduk() + " Jumlah: "
-                + savedOrder.getJumlah() + " Harga Satuan: " + savedOrder.getHarga() + " Total Harga: " + savedOrder.getTotal()
-                + " ID Pelanggan: " + savedOrder.getIdPelanggan());
-        return savedOrder;
+    public Order updateOrder(Integer id, Order order) {
+        return orderRepository.findById(id)
+                .map(existing -> {
+                    existing.setIdProduk(order.getIdProduk());
+                    existing.setIdPelanggan(order.getIdPelanggan());
+                    existing.setHarga(order.getHarga());
+                    existing.setJumlah(order.getJumlah());
+                    Order savedOrder = orderRepository.save(existing);
+                    sendMessage("Order updated: " + "ID: " + savedOrder.getId() + " ID Produk: "
+                            + savedOrder.getIdProduk() + " Jumlah: " + savedOrder.getJumlah() + " Harga Satuan: "
+                            + savedOrder.getHarga() + " Total Harga: " + savedOrder.getTotal() + " ID Pelanggan: "
+                            + savedOrder.getIdPelanggan());
+                    return savedOrder;
+                })
+                .orElse(null);
     }
 
     public void deleteOrder(Integer id) {

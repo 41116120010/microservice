@@ -22,10 +22,20 @@ public class BootstrapAdmin implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        if (StringUtils.hasText(properties.bootstrapAdmin().password())
-                && userRepository.findByUsername(properties.bootstrapAdmin().username()).isEmpty()) {
-            userRepository.save(new AppUser(properties.bootstrapAdmin().username(),
-                    passwordEncoder.encode(properties.bootstrapAdmin().password()), "ADMIN"));
+        if (!StringUtils.hasText(properties.bootstrapAdmin().password())) {
+            return;
         }
+
+        userRepository.findByUsername(properties.bootstrapAdmin().username())
+                .ifPresentOrElse(existing -> {
+                    if (!StringUtils.hasText(existing.getEmail())) {
+                        existing.setEmail(properties.bootstrapAdmin().email());
+                        userRepository.save(existing);
+                    }
+                }, () -> userRepository.save(new AppUser(
+                        properties.bootstrapAdmin().username(),
+                        properties.bootstrapAdmin().email(),
+                        passwordEncoder.encode(properties.bootstrapAdmin().password()),
+                        "ADMIN")));
     }
 }

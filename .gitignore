@@ -6,7 +6,7 @@ AUTHENTICATION.md
 
 *.md
 !README.md
-!LAPORAN_ANALISIS.md
+LAPORAN_ANALISIS.md
 
 # Maven
 target/

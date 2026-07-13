@@ -18,6 +18,9 @@ public class AppUser {
     @Column(nullable = false, unique = true, length = 100)
     private String username;
 
+    @Column(length = 254, unique = true)
+    private String email;
+
     @Column(nullable = false)
     private String passwordHash;
 
@@ -27,14 +30,23 @@ public class AppUser {
     protected AppUser() {
     }
 
-    public AppUser(String username, String passwordHash, String role) {
+    public AppUser(String username, String email, String passwordHash, String role) {
         this.username = username;
+        this.email = email;
         this.passwordHash = passwordHash;
         this.role = role;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPasswordHash() {

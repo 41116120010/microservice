@@ -8,6 +8,6 @@ public record AuthProperties(Jwt jwt, BootstrapAdmin bootstrapAdmin) {
     public record Jwt(String issuer, long expirationMinutes) {
     }
 
-    public record BootstrapAdmin(String username, String password) {
+    public record BootstrapAdmin(String username, String email, String password) {
     }
 }

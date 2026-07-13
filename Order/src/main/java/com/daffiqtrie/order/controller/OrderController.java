@@ -61,13 +61,8 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Order> updateOrder(@PathVariable Integer id, @RequestBody Order order) {
-        try {
-            orderService.getOrderById(id);
-            order.setId(id);
-            return ResponseEntity.ok(orderService.updateOrder(order));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Order updated = orderService.updateOrder(id, order);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

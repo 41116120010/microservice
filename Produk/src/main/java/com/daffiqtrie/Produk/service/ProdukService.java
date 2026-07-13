@@ -30,6 +30,18 @@ public class ProdukService {
         return produkRepository.save(produk);
     }
 
+    public Produk updateProduk(Long id, Produk produk) {
+        log.info("Updating product with id: {}", id);
+        return produkRepository.findById(id)
+                .map(existing -> {
+                    existing.setNama(produk.getNama());
+                    existing.setSatuan(produk.getSatuan());
+                    existing.setHarga(produk.getHarga());
+                    return produkRepository.save(existing);
+                })
+                .orElse(null);
+    }
+
     public void deleteProduk(Long id) {
         log.info("Deleting product with id: {}", id);
         produkRepository.deleteById(id);
